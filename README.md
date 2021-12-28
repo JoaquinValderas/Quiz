@@ -1,2 +1,2 @@
 # Quiz
-1.
+Quiz about Rick &amp; Morty
