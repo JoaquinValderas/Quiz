@@ -3,32 +3,47 @@ import java.io.*;
 import java.util.Scanner;
 
 public class StorageFile{
-    File archivo;
+    File filemanager;
     BufferedWriter bw;
     Scanner sc = new Scanner(System.in);
     boolean pedir = true;
+    final String nombrefolder = "datos";
+    String temp;
     
-    public void Create(String nombreArchivo){
-        archivo = new File(nombreArchivo);
+    public void CreateFolder(String NombreCarpeta){
+        String dir = System.getProperty("user.dir");
+        temp = dir+"/"+ NombreCarpeta;
+        filemanager = new File(temp);
         try{
-            if(!archivo.exists()){
-                archivo.createNewFile();
-            }else{
-                archivo.delete();
-                archivo.createNewFile();
+            if(!filemanager.exists()){
+                filemanager.mkdir();
             }
-
         }catch(Exception e){
-            System.out.println(e);
+        }
+    }
+            
+    public void Create(String nombreArchivo){
+        CreateFolder(nombrefolder);
+        nombreArchivo = nombrefolder+"/"+nombreArchivo;
+        filemanager = new File(nombreArchivo);
+        try{
+            if(!filemanager.exists()){
+                filemanager.createNewFile();
+            }else{
+                filemanager.delete();
+                filemanager.createNewFile();
+            }
+        }catch(Exception e){
         }
     }
     
     public String[] Load(String nombreArchivo) {
+        nombreArchivo = nombrefolder+"/"+nombreArchivo;
         // TODO falta q no lo abra dos 
         BufferedReader br;
         String array[] = null;
         try {
-            br = new BufferedReader(new FileReader(archivo));
+            br = new BufferedReader(new FileReader(nombreArchivo));
             String linea;
             int numlin = 0;
             while ((linea = br.readLine()) != null) {
@@ -36,29 +51,27 @@ public class StorageFile{
             }
             array = new String[numlin];
             br.close();
-            br = new BufferedReader(new FileReader(archivo));
+            br = new BufferedReader(new FileReader(nombreArchivo));
             numlin=0;
             while ((linea = br.readLine()) != null) {
                 array[numlin]=linea;
                numlin++;
             }
+            br.close();
         }catch(Exception e){
-            System.out.println(e);    
         }
         return array;
     }
     
-    
     public void Save(String[] ArrayTemp, String nombreArchivo){
         Create(nombreArchivo);
         try{
-            bw = new BufferedWriter(new FileWriter(archivo,true));
+            bw = new BufferedWriter(new FileWriter(filemanager,true));
             for (int i = 0; i < ArrayTemp.length; i++){
                 bw.write(ArrayTemp[i]+"\n");
             } 
             bw.close();
         }catch(Exception e){
-            System.out.println(e);
         }
     }
 }

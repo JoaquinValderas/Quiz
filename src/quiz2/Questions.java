@@ -175,11 +175,16 @@ public class Questions {
         gameSto.Save(Ans,"Answers.txt");
         gameSto.Save(Mchoice,"Choices.txt");
     }
-    
+    /*
+    public void Reset(){
+        
+        gameSto.filemanager.delete();
+    }
+    */
     public void MenuQuestions(){
         boolean pedir = true;
         do{
-            System.out.println("POSSIBLE OPTIONS: \n   1.-Add \n   2.-Delete \n   3.-Modify \n   4.-Exit to the menu");
+            System.out.println("POSSIBLE OPTIONS: \n   1.-Add \n   2.-Delete \n   3.-Modify \n   4.-Reset questions \n   5.-Exit to the menu");
             int opcion = sc.nextInt();
             System.out.println("-------------------");
             switch (opcion) {
@@ -196,6 +201,10 @@ public class Questions {
                     modifyQuestions();
                     break;
                 case 4:
+                    System.out.println("You have selected the modify option");
+                    //TO DO resetar las preguntas   
+                    break;
+                case 5:
                     System.out.println("You have exit to the menu");
                     pedir=false;
                     break;
