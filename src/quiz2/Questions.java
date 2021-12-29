@@ -11,11 +11,11 @@ public class Questions {
     String[] Mchoice;
     StorageFile gameSto;
 
-    void initQuestion(){
+    public void initQuestion(){
         gameSto = new StorageFile();
         sc.useDelimiter("\n");
         Ques = gameSto.Load("Questions.txt");
-        if(Ques == null){
+        if(Ques == null || Ques.length == 0){
             Ques = new String[numquestions];
             Ques[0] = "Is Mr. Dirty Eyelet a space parasite that reproduces itself by implanting false happy memories?";
             Ques[1] = "In the dimension of Doofus Rick (silly Rick) eat excrement?";
@@ -58,11 +58,9 @@ public class Questions {
     }
 
     public void modifyQuestions(){
-        int r=0;
         System.out.println("These are the available questions:");
         for (int i = 0; i < Ques.length; i++) {
-            System.out.println(r+".-"+Ques[i]);
-            r++;
+            System.out.println(i+".-"+Ques[i]);
         }
         System.out.println("What question do you want to modify?");
         int modify = sc.nextInt();
@@ -72,6 +70,7 @@ public class Questions {
         Mchoice[modify] = sc.next();
         System.out.println("Modify the correct answer to the question");
         Ans[modify] = sc.next().toUpperCase();
+        System.out.println();
         System.out.print(Ques[modify]+"\n"+ formatea(Mchoice[modify]+"\n"+Ans[modify]));
         Save();
     }
@@ -92,11 +91,9 @@ public class Questions {
         if(Ques.length<1){
             System.out.println("Error, not all questions can be deleted");
         }else{
-            int r=0;
             System.out.println("These are the available questions:");
             for (int i = 0; i < Ques.length; i++) {
-                System.out.println(r+".-"+Ques[i]);
-                r++;
+                System.out.println(i+".-"+Ques[i]);
             }
             System.out.println();
             System.out.println("What questions do you want to eliminate?");
@@ -106,12 +103,6 @@ public class Questions {
                 this.Ques = remueveElement(Ques,eliminar);
                 this.Mchoice = remueveElement(Mchoice,eliminar);
                 this.Ans = remueveElement(Ans,eliminar);
-                for (int i = 0; i < Ques.length; i++) {
-                    System.out.println((i+1) +".- "+ Ques[i]);
-                    System.out.println(this.formatea(Mchoice[i]));
-                    System.out.println("Correct Answer: "+ Ans[i]);
-                    System.out.println();
-                }
                 this.numquestions = Ques.length;
             }else{
                 System.out.println("It's not possible to delete this question");
@@ -175,12 +166,13 @@ public class Questions {
         gameSto.Save(Ans,"Answers.txt");
         gameSto.Save(Mchoice,"Choices.txt");
     }
-    /*
+    
     public void Reset(){
-        
-        gameSto.filemanager.delete();
+        gameSto.Reset("Questions.txt");
+        initQuestion();
+        Save();
     }
-    */
+    
     public void MenuQuestions(){
         boolean pedir = true;
         do{
@@ -201,8 +193,8 @@ public class Questions {
                     modifyQuestions();
                     break;
                 case 4:
-                    System.out.println("You have selected the modify option");
-                    //TO DO resetar las preguntas   
+                    System.out.println("You have selected the Reset option");
+                    Reset();
                     break;
                 case 5:
                     System.out.println("You have exit to the menu");

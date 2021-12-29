@@ -9,7 +9,8 @@ public class StorageFile{
     boolean pedir = true;
     final String nombrefolder = "datos";
     String temp;
-    
+    Questions gameQues;
+
     public void CreateFolder(String NombreCarpeta){
         String dir = System.getProperty("user.dir");
         temp = dir+"/"+ NombreCarpeta;
@@ -61,6 +62,21 @@ public class StorageFile{
         }catch(Exception e){
         }
         return array;
+    }
+    
+    public void Reset(String nombreArchivo){
+        nombreArchivo = nombrefolder+"/"+nombreArchivo;
+        filemanager = new File(nombreArchivo);
+        filemanager.delete();
+        try{
+            filemanager = new File(nombreArchivo);
+            filemanager.createNewFile();
+            bw = new BufferedWriter(new FileWriter(filemanager,true));
+            bw.write("");
+            bw.close();
+            }catch(Exception e){
+        }
+        System.out.println();
     }
     
     public void Save(String[] ArrayTemp, String nombreArchivo){

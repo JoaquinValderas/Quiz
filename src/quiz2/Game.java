@@ -126,7 +126,7 @@ public class Game {
                         }
                     }
                 } while (i < gameCon.Q2answer);
-                printScore();//LLamada al metodo
+                printScore();
                 continueQ = playAgain(continueQ);
             }
         } while (continueQ);
