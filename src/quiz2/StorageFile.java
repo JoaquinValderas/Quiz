@@ -8,12 +8,11 @@ public class StorageFile{
     Scanner sc = new Scanner(System.in);
     boolean pedir = true;
     final String nombrefolder = "datos";
-    String temp;
     Questions gameQues;
 
     public void CreateFolder(String NombreCarpeta){
         String dir = System.getProperty("user.dir");
-        temp = dir+"/"+ NombreCarpeta;
+        String temp = dir+"/"+ NombreCarpeta;
         filemanager = new File(temp);
         try{
             if(!filemanager.exists()){
@@ -40,7 +39,6 @@ public class StorageFile{
     
     public String[] Load(String nombreArchivo) {
         nombreArchivo = nombrefolder+"/"+nombreArchivo;
-        // TODO falta q no lo abra dos 
         BufferedReader br;
         String array[] = null;
         try {

@@ -11,6 +11,7 @@ public class Game {
     Configuration gameCon;
     Questions gameQues;
     StorageFile gameSto;
+    Rankings Rank;
     final double BONIFICATION = 0.5;
     double correct =0;
     double bonuspoint = 0;
@@ -28,13 +29,18 @@ public class Game {
     private void initGame(){
         gameCon = new Configuration();
         gameSto = new StorageFile();
+        Rank = new Rankings();
+        gameQues = new Questions();
+        
+        Qrandom = new Random();
+        df = new DecimalFormat("0.00");
         sc=new Scanner(System.in);
         sc.useDelimiter("\n");
-        df = new DecimalFormat("0.00");
         df.setMaximumFractionDigits(2);
-        Qrandom = new Random();
-        gameQues = new Questions();
         gameQues.initQuestion();
+        Rank.initRanking();
+        Rank.SaveRank();
+        Rank.Load();
         comprobation = new int[gameQues.Ques.length];
     }
     
@@ -70,9 +76,7 @@ public class Game {
         System.out.println(gameCon.BOLD + gameCon.QUIZNAME + "!!!" + gameCon.RESET);
         System.out.println("---------------------");
          do {
-            System.out.println("""
-                               How many questions do you want to answer? 
-                               The maximum questions to answer are"""+" "+gameCon.MAXIMUM);
+            System.out.println("How many questions do you want to answer?\n" + "The maximum questions to answer are "+ gameCon.MAXIMUM);
             gameCon.Q2answer = sc.nextInt();
             System.out.println();
             if (gameCon.Q2answer > gameCon.MAXIMUM) {
@@ -99,7 +103,7 @@ public class Game {
                             winstreak++;
                             i++;
                             consecutiveerrors = 0;
-                            if (winstreak >= 3) {//3 correctas bonificación
+                            if (winstreak >= 3) {
                                 System.out.println("You are on win streak, you have a bonification, +0.5 extra points");
                                 System.out.println();
                                 bonuspoint = bonuspoint + BONIFICATION;
@@ -111,11 +115,11 @@ public class Game {
                             winstreak = 0;
                             i++;
                             consecutiveerrors++;
-                            if (winstreak == 0) {//si falla winstreak reinicia y imprime string
+                            if (winstreak == 0) {
                                 System.out.println("You are not win streak finish");
                                 System.out.println();
                             }
-                            if (consecutiveerrors == 3) {// 3 errores consecutivos pasa a dar score
+                            if (consecutiveerrors == 3) {
                                 System.out.println(gameCon.REDCOLOR + "You have made 3 mistakes in a row" + gameCon.RESET);
                                 i = gameCon.Q2answer;
                             }
@@ -149,13 +153,14 @@ public class Game {
                 break;
             default:
                 System.out.println(gameCon.REDCOLOR + "Error occurred, you  have introduced a incompatible decision" + gameCon.RESET);
-                System.out.println(gameCon.BOLD + "QUIz FINISH" + gameCon.RESET);
+                System.out.println(gameCon.BOLD + "QUIZ FINISH" + gameCon.RESET);
                 tmpContinueQ = false;
                 break;
         }
         return tmpContinueQ;
     }
     private void printScore(){
+        double points = correct+bonuspoint;
         System.out.println();
         System.out.print("\t YOUR SCORE");
         System.out.println();
@@ -163,9 +168,9 @@ public class Game {
         System.out.println("\n Number of bonus points: " + bonuspoint);
         System.out.println("\n Number of" + gameCon.REDCOLOR + " incorrect" + gameCon.RESET + " answers: " + incorrect);
         System.out.println();
-        gameCon.percent = (double) (correct * 100) / gameCon.Q2answer;
+        gameCon.percent = (double) (points * 100) / gameCon.Q2answer;
         System.out.print("Your hit percentage is: ");
-        System.out.print(df.format(gameCon.percent));// solo dos decimales
+        System.out.print(df.format(gameCon.percent));
         System.out.print("%");
         System.out.println();
         if (gameCon.percent < 33) {
@@ -181,5 +186,7 @@ public class Game {
             System.out.println(gameCon.PERCENT100);
             System.out.println();
         }
+        Rank.StartRanking(points);
+        Rank.ShowRanking();
     }
 }

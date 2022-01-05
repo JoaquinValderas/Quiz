@@ -10,8 +10,10 @@ public class Questions {
     String[] Ans;
     String[] Mchoice;
     StorageFile gameSto;
+    Rankings Rank;
 
     public void initQuestion(){
+        Rank = new Rankings();
         gameSto = new StorageFile();
         sc.useDelimiter("\n");
         Ques = gameSto.Load("Questions.txt");
@@ -165,12 +167,13 @@ public class Questions {
         gameSto.Save(Ques,"Questions.txt");
         gameSto.Save(Ans,"Answers.txt");
         gameSto.Save(Mchoice,"Choices.txt");
+
     }
     
     public void Reset(){
         gameSto.Reset("Questions.txt");
         initQuestion();
-        Save();
+        Save();   
     }
     
     public void MenuQuestions(){

@@ -1,4 +1,3 @@
-//Configuración de varibales
 package quiz2;
 public class Configuration {
     final String QUIZNAME = "Ricky & Morty QUIZ"; 
@@ -6,10 +5,10 @@ public class Configuration {
     final String PERCENT34_66 = "YOU'VE TRIED";
     final String PERCENT67_99 = "A TRUE FAN";
     final String PERCENT100 = "FAN NUMBER ONE";
-    int MAXIMUM = 10; // máximo de preguntas
-    double percent;//sacar porcentaje de los aciertos
-    int Q2answer;//preguntas q quieres responder  
-    char exit;//tecla para salir 
+    int MAXIMUM = 10; 
+    double percent;
+    int Q2answer;
+    char exit;
     final String REDCOLOR = "\u001B[31m";
     final String GREENCOLOR = "\u001B[32m";
     final String BOLD = "\u001B[1m";
